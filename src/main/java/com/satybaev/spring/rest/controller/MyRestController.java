@@ -24,6 +24,29 @@ public class MyRestController {
 
     @GetMapping("/employees/{id}")
     public Employee getEmployee(@PathVariable int id) {
+       return checkEmployee(id);
+    }
+
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee employee) {
+        employeeService.saveEmployee(employee);
+        return employee;
+    }
+
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee employee) {
+        employeeService.saveEmployee(employee);
+        return employee;
+    }
+
+    @DeleteMapping("/employees/{id}")
+    public String deleteEmployee(@PathVariable int id) {
+        checkEmployee(id);
+        employeeService.deleteEmployee(id);
+        return "Employee with ID " + id + " was deleted";
+    }
+
+    private Employee checkEmployee(int id) {
         Employee employee = employeeService.getEmployee(id);
         if (employee == null) {
             throw new NoSuchEmployeeException(
